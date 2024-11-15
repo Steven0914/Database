@@ -1,8 +1,13 @@
 from controller.menu import start_menu
 from database.connect_db import get_connection, close_connection
+from database.init_db import initialize_database
+
 
 def main():
     try:
+        # DB 초기화
+        initialize_database()
+
         # DB 연결
         connection, cursor = get_connection()
 
