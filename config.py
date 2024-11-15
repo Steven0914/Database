@@ -3,5 +3,6 @@ DB_INFO = {
     'port': 4567,
     'user': 'shu',
     'password': 'ssss1234',
-    'database': 'madang'
+    'database': 'madang',
+    'connection_timeout': 5
 }

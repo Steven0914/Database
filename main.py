@@ -10,7 +10,7 @@ def main():
         print("DB 종료 성공")
 
     except Exception as e:
-        print(f"An error occurred: {e}")
+        print(f"에러 발생: {e}")
 
 if __name__ == "__main__":
     main()
