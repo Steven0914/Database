@@ -1,4 +1,14 @@
 def admin_menu(cursor, connection):
+    user_id = input("아이디를 입력하세요: ")
+    password = input("비밀번호를 입력하세요: ")
+
+    # 로그인 로직
+
+    login_successful = True
+    if not login_successful:
+        print("로그인 실패! 이전 메뉴로 돌아갑니다.\n")
+        return
+
     while True:
         print("\n===== 관리자 메뉴 =====")
         print("1. 데이터베이스 초기화")
@@ -31,7 +41,7 @@ def admin_menu(cursor, connection):
             elif choice == '8':
                 print("교수 추가")
             elif choice == '9':
-                print("이전 메뉴로 돌아갑니다.")
+                print("이전 메뉴로 돌아갑니다.\n")
                 break
             else:
                 print("잘못된 입력입니다. 1~9 사이의 숫자를 입력해주세요.")
