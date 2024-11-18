@@ -2,7 +2,6 @@ from database.connect_db import get_connection, close_connection
 
 def initialize_database():
     try:
-
         connection, cursor = get_connection()
 
         with open('sw_club.sql', 'r', encoding='utf-8') as f:
