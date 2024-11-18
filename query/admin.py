@@ -1,11 +1,15 @@
 # 학부 번호 검색
 find_department = """
-SELECT 학부번호 FROM 학부 WHERE 학부명 = %s;
+SELECT 학부번호 
+FROM 학부 
+WHERE 학부명 = %s;
 """
 
 # 동아리 번호 검색
 find_club = """
-SELECT 동아리번호 FROM 동아리 WHERE 명칭 = %s;
+SELECT 동아리번호 
+FROM 동아리 
+WHERE 명칭 = %s;
 """
 
 # 학생 추가

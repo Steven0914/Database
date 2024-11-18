@@ -1,13 +1,19 @@
+import query.student as query
+
+
 def student_menu(cursor, connection):
-    user_id = input("아이디를 입력하세요: ")
+    user_id = input("학번을 입력하세요: ")
     password = input("비밀번호를 입력하세요: ")
 
-    # 로그인 로직
+    cursor.execute(query.student_login, (user_id, password))
+    result = cursor.fetchone()
 
-    login_successful = True
-    if not login_successful:
-        print("로그인 실패! 이전 메뉴로 돌아갑니다.\n")
+    if result is None:
+        print("로그인 실패! 학번 또는 비밀번호가 잘못되었습니다.\n")
         return
+
+    student_name = result[0]
+    print(f"\n환영합니다, {student_name}님!")
 
     while True:
         print("\n===== 학생 메뉴 =====")
