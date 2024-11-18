@@ -25,7 +25,7 @@ def president_menu(cursor, connection):
             print("4. 운영 동아리의 활동 조회")
             print("5. 운영 동아리 인원 조회")
             print("6. 동아리 활동 조회")
-            print("7. 동아리원 탈퇴")
+            print("7. 동아리원 강퇴")
             print("8. 활동 정보 변경")
             print("99. 이전 메뉴로 돌아가기")
 
@@ -44,7 +44,7 @@ def president_menu(cursor, connection):
             elif choice == '6':
                 print("동아리 활동 조회")
             elif choice == '7':
-                print("동아리원 탈퇴")
+                print("동아리원 강퇴")
             elif choice == '8':
                 print("활동 정보 변경")
             elif choice == '99':

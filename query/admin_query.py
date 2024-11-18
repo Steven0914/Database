@@ -19,7 +19,7 @@ VALUES (%s, %s, %s, %s, %s, %s, %s, %s);
 """
 
 # 회장이 아닌 학생 검색
-find_student_without_president = '''
+find_student_without_president = """
 SELECT 학번 
 FROM 학생 
 WHERE 학번 = %s
@@ -29,10 +29,10 @@ WHERE 학번 = %s
       FROM 동아리
       WHERE 회장학번 IS NOT NULL
   );
-'''
+"""
 
 # 지도하는 동아리가 없는 교수 검색
-find_professor_without_supervise= '''
+find_professor_without_supervise= """
 SELECT 교번 
 FROM 교수 
 WHERE 교번 = %s
@@ -41,7 +41,7 @@ WHERE 교번 = %s
       FROM 동아리
       WHERE 지도교수교번 IS NOT NULL
 );
-'''
+"""
 
 # 동아리 추가 및 회장의 동아리 가입
 new_club = """

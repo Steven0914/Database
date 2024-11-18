@@ -1,6 +1,6 @@
 # 학생 로그인
-student_login = '''
+student_login = """
 SELECT 이름 
 FROM 학생 
 WHERE 학번 = %s AND 비밀번호 = %s;
-'''
+"""

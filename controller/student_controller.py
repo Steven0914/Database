@@ -18,12 +18,13 @@ def student_menu(cursor, connection):
     while True:
         print("\n===== 학생 메뉴 =====")
         print("0. 본인 정보 조회")
-        print("1. 동아리 가입 신청")
-        print("2. 개인 정보 변경")
+        print("1. 동아리 리스트 조회")
+        print("2. 동아리 가입 신청")
         print("3. 동아리 활동 참여")
-        print("4. 동아리 리스트 조회")
+        print("4. 활동 내용 추가")
         print("5. 본인이 참여한 활동 조회")
-
+        print("6. 개인 정보 변경")
+        print("7. 동아리 탈퇴(동아리 소속시에만 가능)")
         print("99. 이전 메뉴로 돌아가기")
 
         try:
@@ -32,16 +33,18 @@ def student_menu(cursor, connection):
             if choice == '0':
                 print("본인 정보 조회")
             elif choice == '1':
-                print("동아리 가입 신청")
+                print("동아리 리스트 조회")
             elif choice == '2':
-                print("개인 정보 변경")
+                print("동아리 가입 신청")
             elif choice == '3':
                 print("동아리 활동 참여")
             elif choice == '4':
-                print("동아리 리스트 조회")
+                print("활동 내용 추가")
             elif choice == '5':
                 print("본인이 참여한 활동 조회")
             elif choice == '6':
+                print("개인 정보 변경")
+            elif choice == '7':
                 print("동아리 탈퇴(동아리 소속시에만 가능)")
             elif choice == '99':
                 print("이전 메뉴로 돌아갑니다.\n")
