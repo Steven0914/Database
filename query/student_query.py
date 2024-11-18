@@ -1,3 +1,4 @@
+# 학생 로그인
 student_login = '''
 SELECT 이름 
 FROM 학생 

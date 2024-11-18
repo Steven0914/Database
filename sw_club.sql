@@ -50,7 +50,7 @@ CREATE TABLE 교수연구분야 (
 
 CREATE TABLE 동아리 (
                      동아리번호 INT PRIMARY KEY,
-                     명칭 VARCHAR(100) NOT NULL,
+                     명칭 VARCHAR(100) NOT NULL UNIQUE,
                      회장학번 INT,
                      지도교수교번 INT,
                      소속학부번호 INT NOT NULL,

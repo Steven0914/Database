@@ -1,3 +1,4 @@
+# 회장 로그인
 president_login = """
 SELECT d.명칭, s.이름
 FROM 동아리 d

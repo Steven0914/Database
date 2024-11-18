@@ -1,9 +1,9 @@
 from database.init_db import initialize_database
-from service.admin_service import add_student
+from service.admin_service import add_student, add_club
 
 
 def admin_menu(cursor, connection):
-    password = input("비밀번호를 입력하세요: ")
+    # password = input("비밀번호를 입력하세요: ")
 
     # admin 로그인 로직, 후에 주석을 해제
     # login_successful = False
@@ -35,7 +35,7 @@ def admin_menu(cursor, connection):
             elif choice == '2':
                 add_student(cursor, connection)
             elif choice == '3':
-                print("동아리 생성")
+                add_club(cursor, connection)
             elif choice == '4':
                 print("동아리 지도 교수 배정")
             elif choice == '5':
