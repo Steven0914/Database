@@ -114,3 +114,11 @@ insert_research_area = """
 INSERT INTO 교수연구분야 (교번, 연구분야)
 VALUES (%s, %s);
 """
+
+get_student_list = """
+SELECT s.학번, s.이름, h.학부명, d.명칭 AS 소속동아리명, s.가입일
+FROM 학생 s
+JOIN 학부 h ON s.소속학부번호 = h.학부번호
+LEFT JOIN 동아리 d ON s.소속동아리번호 = d.동아리번호
+ORDER BY s.학번;
+"""

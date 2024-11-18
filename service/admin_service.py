@@ -1,5 +1,6 @@
 import query.admin_query as query
 
+
 def add_student(cursor, connection):
     try:
         학번 = int(input("학번을 입력하세요: "))
@@ -198,3 +199,39 @@ def add_professor(cursor, connection):
     except Exception as e:
         connection.rollback()
         print(f"교수 추가 중 오류가 발생했습니다: {e}")
+
+
+def get_student_list(cursor):
+    try:
+        cursor.execute(query.get_student_list)
+        results = cursor.fetchall()
+
+        if not results:
+            print("학생 리스트가 비어 있습니다.")
+            return
+
+        col_widths = [15, 20, 25, 20, 15]
+        header = ["학번", "이름", "소속 학부", "소속 동아리", "가입일"]
+
+        print("\n===== 학생 리스트 =====\n")
+        header_row = "".join(f"{header[i]:<{col_widths[i]}}" for i in range(len(header)))
+        print(header_row)
+        print("=" * sum(col_widths))
+
+        for row in results:
+            학번, 이름, 학부명, 동아리명, 가입일 = row
+            동아리명 = 동아리명 if 동아리명 else "없음"
+            가입일 = 가입일.strftime("%Y-%m-%d") if 가입일 else "미가입"
+            data_row = (
+                f"{str(학번):<{col_widths[0]}}"
+                f"{이름:<{col_widths[1]}}"
+                f"{학부명:<{col_widths[2]}}"
+                f"{동아리명:<{col_widths[3]}}"
+                f"{가입일:<{col_widths[4]}}"
+            )
+            print(data_row)
+
+        print("=" * sum(col_widths))
+
+    except Exception as e:
+        print(f"학생 리스트 조회 중 오류가 발생했습니다: {e}")
