@@ -6,3 +6,5 @@ DB_INFO = {
     'database': 'sw_club',
     'connection_timeout': 5
 }
+
+ADMIN_PASSWORD = '1234'

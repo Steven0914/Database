@@ -1,13 +1,14 @@
+from config import ADMIN_PASSWORD
 from database.init_db import initialize_database
 from service.admin_service import add_student, add_club, change_supervisor
 
 
 def admin_menu(cursor, connection):
     # password = input("비밀번호를 입력하세요: ")
-
-    # admin 로그인 로직, 후에 주석을 해제
+    #
+    # # admin 로그인 로직, 후에 주석을 해제
     # login_successful = False
-    # if password == "1234":
+    # if password == ADMIN_PASSWORD:
     #     login_successful = True
     #
     # if not login_successful:
