@@ -125,3 +125,38 @@ def get_club_info(cursor):
 
     except Exception as e:
         print(f"동아리 통계 조회 중 오류가 발생했습니다: {e}")
+
+
+def change_president(cursor, connection):
+    try:
+        동아리명 = input("회장을 변경할 동아리 이름을 입력하세요: ").strip()
+
+        cursor.execute(query.find_club_by_name, (동아리명,))
+        동아리결과 = cursor.fetchone()
+        if not 동아리결과:
+            raise ValueError(f"'{동아리명}' 동아리에 해당하는 동아리가 존재하지 않습니다.")
+
+        동아리번호 = 동아리결과[0]
+        print(f"'{동아리명}' 동아리의 회장을 변경합니다.")
+
+        새로운회장학번 = int(input("새로운 회장의 학번을 입력하세요: "))
+        cursor.execute(query.find_student_without_president, (새로운회장학번,))
+        회장결과 = cursor.fetchone()
+        if not 회장결과:
+            raise ValueError(f"학번 {새로운회장학번}에 해당하는 학생은 이미 회장이거나 다른 동아리에 소속되어 있습니다.")
+
+        cursor.execute(query.check_student_in_club, (새로운회장학번, 동아리번호))
+        동일동아리결과 = cursor.fetchone()
+
+        cursor.execute(query.update_president, (새로운회장학번, 동아리번호))
+
+        if not 동일동아리결과:
+            cursor.execute(query.change_club, (동아리번호, 새로운회장학번))
+
+        connection.commit()
+        print(f"동아리 '{동아리명}'의 회장이 성공적으로 변경되었습니다.")
+
+    except ValueError as ve:
+        print(f"입력 오류: {ve}")
+    except Exception as e:
+        connection.rollback()

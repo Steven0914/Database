@@ -52,7 +52,8 @@ VALUES (%s, %s, %s, %s, %s);
 # 학생의 소속 동아리 변경
 change_club = """
 UPDATE 학생
-SET 소속동아리번호 = %s
+SET 소속동아리번호 = %s,
+    가입일 = CURDATE()
 WHERE 학번 = %s;
 """
 # 동아리 이름으로 검색
@@ -84,4 +85,16 @@ LEFT JOIN 학생 s2 ON d.동아리번호 = s2.소속동아리번호
 LEFT JOIN 활동 a ON d.동아리번호 = a.주관동아리번호
 GROUP BY d.동아리번호, d.명칭, s1.이름, p.이름
 ORDER BY d.명칭;
+"""
+
+check_student_in_club = """
+SELECT 학번 
+FROM 학생
+WHERE 학번 = %s AND 소속동아리번호 = %s;
+"""
+
+update_president = """
+UPDATE 동아리
+SET 회장학번 = %s
+WHERE 동아리번호 = %s;
 """
