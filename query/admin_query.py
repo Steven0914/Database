@@ -98,3 +98,19 @@ UPDATE 동아리
 SET 회장학번 = %s
 WHERE 동아리번호 = %s;
 """
+
+check_professor = """
+SELECT 교번 
+FROM 교수 
+WHERE 교번 = %s OR 이메일 = %s;
+"""
+
+insert_professor = """
+INSERT INTO 교수 (교번, 이름, 이메일, 임용일, 소속학부번호)
+VALUES (%s, %s, %s, %s, %s);
+"""
+
+insert_research_area = """
+INSERT INTO 교수연구분야 (교번, 연구분야)
+VALUES (%s, %s);
+"""

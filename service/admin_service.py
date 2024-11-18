@@ -160,3 +160,41 @@ def change_president(cursor, connection):
         print(f"입력 오류: {ve}")
     except Exception as e:
         connection.rollback()
+
+
+def add_professor(cursor, connection):
+    try:
+        교번 = int(input("교수의 교번을 입력하세요: "))
+        이름 = input("교수의 이름을 입력하세요: ")
+        이메일 = input("교수의 이메일을 입력하세요: ")
+        임용일 = input("임용일을 입력하세요 (형식: YYYY-MM-DD): ")
+        학부명 = input("소속 학부명을 입력하세요: ")
+
+        cursor.execute(query.find_department, (학부명,))
+        학부결과 = cursor.fetchone()
+        if not 학부결과:
+            raise ValueError(f"'{학부명}' 학부를 찾을 수 없습니다.")
+        소속학부번호 = 학부결과[0]
+
+        cursor.execute(query.check_professor, (교번, 이메일))
+        중복결과 = cursor.fetchone()
+        if 중복결과:
+            raise ValueError(f"이미 존재하는 교번({교번}) 또는 이메일({이메일})입니다.")
+
+        cursor.execute(query.insert_professor, (교번, 이름, 이메일, 임용일, 소속학부번호))
+
+        print("교수의 연구분야를 입력하세요. 입력을 종료하려면 'q'를 입력하세요.")
+        while True:
+            연구분야 = input("연구분야: ").strip()
+            if 연구분야.lower() in ['q']:
+                break
+            cursor.execute(query.insert_research_area, (교번, 연구분야))
+
+        connection.commit()
+        print(f"교수 '{이름}'이 성공적으로 추가되었습니다.")
+
+    except ValueError as ve:
+        print(f"입력 오류: {ve}")
+    except Exception as e:
+        connection.rollback()
+        print(f"교수 추가 중 오류가 발생했습니다: {e}")
