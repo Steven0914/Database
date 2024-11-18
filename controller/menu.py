@@ -1,6 +1,6 @@
-from controller.admin import admin_menu
-from controller.president import president_menu
-from controller.student import student_menu
+from controller.admin_controller import admin_menu
+from controller.president_controller import president_menu
+from controller.student_controller import student_menu
 
 
 def start_menu (connection, cursor):
@@ -17,7 +17,7 @@ def start_menu (connection, cursor):
 :......::::...::...:::::::......:::........:::.......:::........:::          
 ===================================================================
 SoftWare CLUB Management System                            (v1.0.0)
-    ''')
+''')
 
     while True:
         print("===== 역할 선택 =====")

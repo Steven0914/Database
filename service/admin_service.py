@@ -1,4 +1,4 @@
-import query.admin as query
+import query.admin_query as query
 
 def add_student(cursor, connection):
     try:

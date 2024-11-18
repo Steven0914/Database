@@ -1,4 +1,4 @@
-import query.president as query
+import query.president_query as query
 
 def president_menu(cursor, connection):
     try:
@@ -27,7 +27,7 @@ def president_menu(cursor, connection):
             print("6. 동아리 활동 조회")
             print("7. 동아리원 탈퇴")
             print("8. 활동 정보 변경")
-            print("9. 이전 메뉴로 돌아가기")
+            print("99. 이전 메뉴로 돌아가기")
 
             choice = input("회장 메뉴에서 무엇을 하시겠습니까?: ")
 
@@ -47,7 +47,7 @@ def president_menu(cursor, connection):
                 print("동아리원 탈퇴")
             elif choice == '8':
                 print("활동 정보 변경")
-            elif choice == '9':
+            elif choice == '99':
                 print("이전 메뉴로 돌아갑니다.\n")
                 break
             else:
