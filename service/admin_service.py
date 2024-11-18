@@ -49,7 +49,7 @@ def add_club(cursor, connection):
         cursor.execute(query.find_student_without_president, (회장학번,))
         회장결과 = cursor.fetchone()
         if not 회장결과:
-            raise ValueError(f"학번 {회장학번}에 해당하는 학생을 찾을 수 없거나 이미 회장인 학생입니다.")
+            raise ValueError(f"학번 {회장학번}에 해당하는 학생을 찾을 수 없거나, 다른 동아리 가입, 혹은 이미 회장인 학생입니다.")
 
         지도교수교번 = int(input("지도 교수의 교번을 입력하세요: "))
         cursor.execute(query.find_professor_without_supervise, (지도교수교번,))
@@ -65,6 +65,8 @@ def add_club(cursor, connection):
         소속학부번호 = 학부결과[0]
 
         cursor.execute(query.new_club, (동아리번호, 명칭, 회장학번, 지도교수교번, 소속학부번호))
+
+        cursor.execute(query.change_club, (동아리번호, 회장학번))
         connection.commit()
 
         print("동아리가 성공적으로 추가되었습니다.")

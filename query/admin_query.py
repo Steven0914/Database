@@ -23,11 +23,12 @@ find_student_without_president = '''
 SELECT 학번 
 FROM 학생 
 WHERE 학번 = %s
+  AND 소속동아리번호 IS NULL
   AND 학번 NOT IN (
       SELECT 회장학번 
       FROM 동아리
       WHERE 회장학번 IS NOT NULL
-);
+  );
 '''
 
 # 지도하는 동아리가 없는 교수 검색
@@ -42,12 +43,18 @@ WHERE 교번 = %s
 );
 '''
 
-# 동아리 추가
+# 동아리 추가 및 회장의 동아리 가입
 new_club = """
 INSERT INTO 동아리 (동아리번호, 명칭, 회장학번, 지도교수교번, 소속학부번호)
 VALUES (%s, %s, %s, %s, %s);
 """
 
+# 학생의 소속 동아리 변경
+change_club = """
+UPDATE 학생
+SET 소속동아리번호 = %s
+WHERE 학번 = %s;
+"""
 # 동아리 이름으로 검색
 find_club_by_name = """
 SELECT 동아리번호 
