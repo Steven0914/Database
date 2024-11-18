@@ -1,6 +1,6 @@
 from config import ADMIN_PASSWORD
 from database.init_db import initialize_database
-from service.admin_service import add_student, add_club, change_supervisor
+from service.admin_service import add_student, add_club, change_supervisor, get_club_info
 
 
 def admin_menu(cursor, connection):
@@ -42,7 +42,7 @@ def admin_menu(cursor, connection):
             elif choice == '4':
                 change_supervisor(cursor, connection)
             elif choice == '5':
-                print("전체 동아리 통계 보기")
+                get_club_info(cursor)
             elif choice == '6':
                 print("동아리 회장 변경")
             elif choice == '7':

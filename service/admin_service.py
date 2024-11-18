@@ -104,3 +104,22 @@ def change_supervisor(cursor, connection):
     except Exception as e:
         connection.rollback()
         print(f"지도 교수 변경 중 오류가 발생했습니다: {e}")
+
+
+def get_club_info(cursor):
+    try:
+        cursor.execute(query.get_club_info)
+        results = cursor.fetchall()
+
+        print("\n===== 동아리별 통계 =====\n")
+        for row in results:
+            print(f"동아리 번호: {row[0]}")
+            print(f"동아리 명칭: {row[1]}")
+            print(f"회장 이름: {row[2]}")
+            print(f"지도 교수: {row[3]}")
+            print(f"회원 수: {row[4]}")
+            print(f"활동 수: {row[5]}")
+            print("-" * 40)
+
+    except Exception as e:
+        print(f"동아리 통계 조회 중 오류가 발생했습니다: {e}")

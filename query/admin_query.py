@@ -62,3 +62,19 @@ UPDATE 동아리
 SET 지도교수교번 = %s
 WHERE 동아리번호 = %s;
 """
+
+# 동아리 정보 조회
+get_club_info = """
+SELECT  d.동아리번호, d.명칭, 
+        s1.이름 AS 회장이름,
+        p.이름 AS 지도교수이름,
+        COUNT(DISTINCT s2.학번) AS 회원수,
+        COUNT(DISTINCT a.활동번호) AS 활동수
+FROM 동아리 d
+LEFT JOIN 학생 s1 ON d.회장학번 = s1.학번
+LEFT JOIN 교수 p ON d.지도교수교번 = p.교번
+LEFT JOIN 학생 s2 ON d.동아리번호 = s2.소속동아리번호
+LEFT JOIN 활동 a ON d.동아리번호 = a.주관동아리번호
+GROUP BY d.동아리번호, d.명칭, s1.이름, p.이름
+ORDER BY d.명칭;
+"""
