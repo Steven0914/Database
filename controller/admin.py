@@ -3,12 +3,11 @@ from service.admin import add_student
 
 
 def admin_menu(cursor, connection):
-    user_id = input("아이디를 입력하세요: ")
     password = input("비밀번호를 입력하세요: ")
 
     # admin 로그인 로직, 후에 주석을 해제
     # login_successful = False
-    # if user_id == "admin" and password == "1234":
+    # if password == "1234":
     #     login_successful = True
     #
     # if not login_successful:
