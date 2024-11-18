@@ -235,3 +235,39 @@ def get_student_list(cursor):
 
     except Exception as e:
         print(f"학생 리스트 조회 중 오류가 발생했습니다: {e}")
+
+def get_professor_list(cursor):
+    try:
+        cursor.execute(query.get_professor_list)
+        results = cursor.fetchall()
+
+        if not results:
+            print("교수 리스트가 비어 있습니다.")
+            return
+
+        col_widths = [10, 15, 20, 30, 15, 50]
+        header = ["교번", "이름", "소속 학부", "이메일", "임용일", "연구분야"]
+
+        print("\n===== 교수 리스트 =====\n")
+        header_row = "".join(f"{header[i]:<{col_widths[i]}}" for i in range(len(header)))
+        print(header_row)
+        print("=" * sum(col_widths))
+
+        for row in results:
+            교번, 이름, 학부명, 이메일, 임용일, 연구분야 = row
+            임용일 = 임용일.strftime("%Y-%m-%d") if 임용일 else "없음"
+            연구분야 = 연구분야 if 연구분야 else "없음"
+            data_row = (
+                f"{str(교번):<{col_widths[0]}}"
+                f"{이름:<{col_widths[1]}}"
+                f"{학부명:<{col_widths[2]}}"
+                f"{이메일:<{col_widths[3]}}"
+                f"{임용일:<{col_widths[4]}}"
+                f"{연구분야:<{col_widths[5]}}"
+            )
+            print(data_row)
+
+        print("=" * sum(col_widths))
+
+    except Exception as e:
+        print(f"교수 리스트 조회 중 오류가 발생했습니다: {e}")

@@ -122,3 +122,13 @@ JOIN 학부 h ON s.소속학부번호 = h.학부번호
 LEFT JOIN 동아리 d ON s.소속동아리번호 = d.동아리번호
 ORDER BY s.학번;
 """
+
+get_professor_list = """
+SELECT p.교번, p.이름, h.학부명, p.이메일, 
+       p.임용일, GROUP_CONCAT(r.연구분야 SEPARATOR ', ') AS 연구분야
+FROM 교수 p
+JOIN 학부 h ON p.소속학부번호 = h.학부번호
+LEFT JOIN 교수연구분야 r ON p.교번 = r.교번
+GROUP BY p.교번, p.이름, h.학부명, p.이메일, p.임용일
+ORDER BY p.교번;
+"""

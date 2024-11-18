@@ -1,7 +1,7 @@
 from config import ADMIN_PASSWORD
 from database.init_db import initialize_database
 from service.admin_service import add_student, add_club, change_supervisor, get_club_info, change_president, \
-    add_professor, get_student_list
+    add_professor, get_student_list, get_professor_list
 
 
 def admin_menu(cursor, connection):
@@ -51,7 +51,7 @@ def admin_menu(cursor, connection):
             elif choice == '8':
                 get_student_list(cursor)
             elif choice == '9':
-                print("교수 리스트 조회")
+                get_professor_list(cursor)
             elif choice == '99':
                 print("이전 메뉴로 돌아갑니다.\n")
                 break
