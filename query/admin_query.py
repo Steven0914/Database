@@ -47,3 +47,18 @@ new_club = """
 INSERT INTO 동아리 (동아리번호, 명칭, 회장학번, 지도교수교번, 소속학부번호)
 VALUES (%s, %s, %s, %s, %s);
 """
+
+# 동아리 이름으로 검색
+find_club_by_name = """
+SELECT 동아리번호 
+FROM 동아리 
+WHERE 명칭 = %s;
+"""
+
+
+# 지도교수 변경
+update_supervisor = """
+UPDATE 동아리
+SET 지도교수교번 = %s
+WHERE 동아리번호 = %s;
+"""

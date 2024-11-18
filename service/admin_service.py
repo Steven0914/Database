@@ -75,3 +75,32 @@ def add_club(cursor, connection):
         connection.rollback()
         print(f"동아리 추가 중 오류가 발생했습니다: {e}")
 
+
+def change_supervisor(cursor, connection):
+    try:
+        동아리명 = input("지도 교수를 변경할 동아리 이름을 입력하세요: ").strip()
+
+        cursor.execute(query.find_club_by_name, (동아리명,))
+        동아리결과 = cursor.fetchone()
+        if not 동아리결과:
+            raise ValueError(f"'{동아리명}' 동아리에 해당하는 동아리가 존재하지 않습니다.")
+
+        동아리번호 = 동아리결과[0]
+        print(f"'{동아리명}' 동아리의 지도 교수를 변경합니다.")
+
+        지도교수교번 = int(input("새로운 지도 교수의 교번을 입력하세요: "))
+        cursor.execute(query.find_professor_without_supervise, (지도교수교번,))
+        교수결과 = cursor.fetchone()
+        if not 교수결과:
+            raise ValueError(f"교번 {지도교수교번}에 해당하는 교수를 찾을 수 없거나 이미 지도하는 동아리가 있습니다.")
+
+        cursor.execute(query.update_supervisor, (지도교수교번, 동아리번호))
+        connection.commit()
+
+        print(f"동아리 '{동아리명}'의 지도 교수가 성공적으로 변경되었습니다.")
+
+    except ValueError as ve:
+        print(f"입력 오류: {ve}")
+    except Exception as e:
+        connection.rollback()
+        print(f"지도 교수 변경 중 오류가 발생했습니다: {e}")

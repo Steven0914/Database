@@ -1,5 +1,5 @@
 from database.init_db import initialize_database
-from service.admin_service import add_student, add_club
+from service.admin_service import add_student, add_club, change_supervisor
 
 
 def admin_menu(cursor, connection):
@@ -21,10 +21,12 @@ def admin_menu(cursor, connection):
         print("1. 데이터베이스 초기화")
         print("2. 학생 추가")
         print("3. 동아리 생성")
-        print("4. 동아리 지도 교수 배정")
+        print("4. 동아리 지도 교수 변경")
         print("5. 전체 동아리 통계 보기")
         print("6. 동아리 회장 변경")
         print("7. 교수 추가")
+        print("8. 학생 리스트 조회")
+        print("9. 교수 리스트 조회")
         print("99. 이전 메뉴로 돌아가기")
 
         try:
@@ -37,13 +39,17 @@ def admin_menu(cursor, connection):
             elif choice == '3':
                 add_club(cursor, connection)
             elif choice == '4':
-                print("동아리 지도 교수 배정")
+                change_supervisor(cursor, connection)
             elif choice == '5':
                 print("전체 동아리 통계 보기")
             elif choice == '6':
                 print("동아리 회장 변경")
             elif choice == '7':
                 print("교수 추가")
+            elif choice == '8':
+                print("학생 리스트 조회")
+            elif choice == '9':
+                print("교수 리스트 조회")
             elif choice == '99':
                 print("이전 메뉴로 돌아갑니다.\n")
                 break
