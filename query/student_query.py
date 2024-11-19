@@ -13,3 +13,15 @@ JOIN 학부 d ON s.소속학부번호 = d.학부번호
 LEFT JOIN 동아리 c ON s.소속동아리번호 = c.동아리번호
 WHERE s.학번 = %s;
 """
+
+# 동아리 리스트 조회
+get_club_list = """
+SELECT 
+    c.명칭 AS 동아리명,
+    s.이름 AS 동아리회장,
+    p.이름 AS 지도교수
+FROM 
+    동아리 c
+LEFT JOIN 학생 s ON c.회장학번 = s.학번
+LEFT JOIN 교수 p ON c.지도교수교번 = p.교번;
+"""

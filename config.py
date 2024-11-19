@@ -1,5 +1,5 @@
 DB_INFO = {
-    'host': '10.211.55.7',
+    'host': '10.211.55.10',
     'port': 4567,
     'user': 'shu',
     'password': 'ssss1234',
