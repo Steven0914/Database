@@ -1,5 +1,5 @@
 import query.president_query as query
-from service.president_service import update_club_name
+from service.president_service import update_club_name, create_activity
 
 
 def president_menu(cursor, connection):
@@ -39,7 +39,7 @@ def president_menu(cursor, connection):
             if choice == '1':
                 update_club_name(cursor, connection, club_name)
             elif choice == '2':
-                print("동아리 활동 생성")
+                create_activity(cursor, connection, club_name)
             elif choice == '3':
                 print("학생 동아리 가입 승인 및 거절")
             elif choice == '4':

@@ -60,10 +60,10 @@ CREATE TABLE 동아리 (
 );
 
 CREATE TABLE 활동 (
-                    활동번호 INT PRIMARY KEY,
+                    활동번호 INT AUTO_INCREMENT PRIMARY KEY,
                     활동명 VARCHAR(100) NOT NULL,
                     날짜 DATE,
-                    활동시간 TIME,
+                    활동시간 INT,
                     주관동아리번호 INT NOT NULL,
                     FOREIGN KEY (주관동아리번호) REFERENCES 동아리(동아리번호)
 );
