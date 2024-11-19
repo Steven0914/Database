@@ -1,5 +1,5 @@
 import query.student_query as query
-from service.student_service import get_info, get_club_list
+from service.student_service import get_info, get_club_list, apply_club
 
 
 def student_menu(cursor, connection):
@@ -38,7 +38,7 @@ def student_menu(cursor, connection):
             elif choice == '1':
                 get_club_list(cursor)
             elif choice == '2':
-                print("동아리 가입 신청")
+                apply_club(cursor, connection, 학번)
             elif choice == '3':
                 print("동아리 활동 참여")
             elif choice == '4':

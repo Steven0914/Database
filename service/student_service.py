@@ -45,3 +45,24 @@ def get_club_list(cursor):
         print("=" * 50)
     except Exception as e:
         print(f"동아리 리스트 조회 중 오류가 발생했습니다: {e}")
+
+
+
+def apply_club(cursor, connection, student_id):
+    try:
+        club_name = input("\n가입 신청할 동아리 이름을 입력하세요: ")
+        cursor.execute(query.find_club, (club_name,))
+        result = cursor.fetchone()
+        club_id = result[0]
+        cursor.execute(query.apply_to_club, (club_id, student_id))
+        connection.commit()
+        print("\n동아리 신청이 완료되었습니다.")
+    except Exception as e:
+        if "Duplicate entry" in str(e):
+            print("\n이미 가입 신청한 동아리입니다.")
+        elif "a foreign key constraint fails" in str(e):
+            print("\n존재하지 않는 동아리 번호이거나 잘못된 학번입니다.")
+        else:
+            print(f"\n동아리 가입 신청 중 오류가 발생했습니다: {e}")
+
+

@@ -25,3 +25,16 @@ FROM
 LEFT JOIN 학생 s ON c.회장학번 = s.학번
 LEFT JOIN 교수 p ON c.지도교수교번 = p.교번;
 """
+
+# 동아리 가입 신청
+apply_to_club = """
+INSERT INTO 가입대기 (동아리번호, 학번)
+VALUES (%s, %s);
+"""
+
+# 동아리 번호 검색
+find_club = """
+SELECT 동아리번호 
+FROM 동아리 
+WHERE 명칭 = %s;
+"""
