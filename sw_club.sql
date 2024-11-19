@@ -15,7 +15,7 @@ DROP TABLE IF EXISTS 학생;
 
 -- 테이블 생성
 CREATE TABLE 학생 (
-                    학번 INT PRIMARY KEY,
+                    학번 INT AUTO_INCREMENT PRIMARY KEY,
                     이름 VARCHAR(50) NOT NULL,
                     연락처 VARCHAR(13) NOT NULL,
                     생일 DATE NOT NULL,
@@ -28,12 +28,12 @@ CREATE TABLE 학생 (
 );
 
 CREATE TABLE 학부 (
-                    학부번호 INT PRIMARY KEY,
+                    학부번호 INT AUTO_INCREMENT PRIMARY KEY,
                     학부명 VARCHAR(100) NOT NULL
 );
 
 CREATE TABLE 교수 (
-                    교번 INT PRIMARY KEY,
+                    교번 INT AUTO_INCREMENT PRIMARY KEY,
                     이름 VARCHAR(50) NOT NULL,
                     이메일 VARCHAR(100) NOT NULL,
                     임용일 DATE NOT NULL,
@@ -49,7 +49,7 @@ CREATE TABLE 교수연구분야 (
 );
 
 CREATE TABLE 동아리 (
-                     동아리번호 INT PRIMARY KEY,
+                     동아리번호 INT AUTO_INCREMENT PRIMARY KEY,
                      명칭 VARCHAR(100) NOT NULL UNIQUE,
                      회장학번 INT,
                      지도교수교번 INT,

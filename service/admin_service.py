@@ -1,9 +1,10 @@
+from datetime import date
+
 import query.admin_query as query
 
 
 def add_student(cursor, connection):
     try:
-        학번 = int(input("학번을 입력하세요: "))
         이름 = input("이름을 입력하세요: ")
         연락처 = input("연락처를 입력하세요 (ex. 010-1234-5678): ")
         생일 = input("생일을 입력하세요 (ex.: YYYY-MM-DD): ")
@@ -19,17 +20,16 @@ def add_student(cursor, connection):
         동아리명 = input("소속 동아리명을 입력하세요 (없으면 Enter): ").strip()
         if not 동아리명:
             소속동아리번호 = None
+            가입일 = None
         else:
             cursor.execute(query.find_club, (동아리명,))
             동아리결과 = cursor.fetchone()
             if not 동아리결과:
                 raise ValueError(f"'{동아리명}' 동아리를 찾을 수 없습니다.")
             소속동아리번호 = 동아리결과[0]
+            가입일 = date.today()
 
-        가입일 = input("가입일을 입력하세요 (형식: YYYY-MM-DD, 없으면 Enter): ")
-        가입일 = 가입일 if 가입일 else None
-
-        cursor.execute(query.insert_student, (학번, 이름, 연락처, 생일, 비밀번호, 소속학부번호, 소속동아리번호, 가입일))
+        cursor.execute(query.insert_student, (이름, 연락처, 생일, 비밀번호, 소속학부번호, 소속동아리번호, 가입일))
         connection.commit()
 
         print("학생이 성공적으로 추가되었습니다.")
@@ -43,7 +43,6 @@ def add_student(cursor, connection):
 
 def add_club(cursor, connection):
     try:
-        동아리번호 = int(input("동아리 번호를 입력하세요: "))
         명칭 = input("동아리 명칭을 입력하세요: ")
 
         회장학번 = int(input("회장의 학번을 입력하세요: "))
@@ -65,7 +64,11 @@ def add_club(cursor, connection):
             raise ValueError(f"'{학부명}' 학부를 찾을 수 없습니다.")
         소속학부번호 = 학부결과[0]
 
-        cursor.execute(query.new_club, (동아리번호, 명칭, 회장학번, 지도교수교번, 소속학부번호))
+        cursor.execute(query.new_club, (명칭, 회장학번, 지도교수교번, 소속학부번호))
+        connection.commit()
+
+        cursor.execute("SELECT LAST_INSERT_ID();")
+        동아리번호 = cursor.fetchone()[0]
 
         cursor.execute(query.change_club, (동아리번호, 회장학번))
         connection.commit()
@@ -165,7 +168,6 @@ def change_president(cursor, connection):
 
 def add_professor(cursor, connection):
     try:
-        교번 = int(input("교수의 교번을 입력하세요: "))
         이름 = input("교수의 이름을 입력하세요: ")
         이메일 = input("교수의 이메일을 입력하세요: ")
         임용일 = input("임용일을 입력하세요 (형식: YYYY-MM-DD): ")
@@ -177,12 +179,16 @@ def add_professor(cursor, connection):
             raise ValueError(f"'{학부명}' 학부를 찾을 수 없습니다.")
         소속학부번호 = 학부결과[0]
 
-        cursor.execute(query.check_professor, (교번, 이메일))
+        cursor.execute(query.check_professor, (이메일, ))
         중복결과 = cursor.fetchone()
         if 중복결과:
-            raise ValueError(f"이미 존재하는 교번({교번}) 또는 이메일({이메일})입니다.")
+            raise ValueError(f"이미 존재하는 이메일({이메일})입니다.")
 
-        cursor.execute(query.insert_professor, (교번, 이름, 이메일, 임용일, 소속학부번호))
+        cursor.execute(query.insert_professor, (이름, 이메일, 임용일, 소속학부번호))
+        connection.commit()
+
+        cursor.execute("SELECT LAST_INSERT_ID();")
+        교번 = cursor.fetchone()[0]
 
         print("교수의 연구분야를 입력하세요. 입력을 종료하려면 'q'를 입력하세요.")
         while True:

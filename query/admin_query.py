@@ -14,8 +14,8 @@ WHERE 명칭 = %s;
 
 # 학생 추가
 insert_student = """
-INSERT INTO 학생 (학번, 이름, 연락처, 생일, 비밀번호, 소속학부번호, 소속동아리번호, 가입일)
-VALUES (%s, %s, %s, %s, %s, %s, %s, %s);
+INSERT INTO 학생 (이름, 연락처, 생일, 비밀번호, 소속학부번호, 소속동아리번호, 가입일)
+VALUES (%s, %s, %s, %s, %s, %s, %s);
 """
 
 # 회장이 아닌 학생 검색
@@ -45,8 +45,8 @@ WHERE 교번 = %s
 
 # 동아리 추가 및 회장의 동아리 가입
 new_club = """
-INSERT INTO 동아리 (동아리번호, 명칭, 회장학번, 지도교수교번, 소속학부번호)
-VALUES (%s, %s, %s, %s, %s);
+INSERT INTO 동아리 (명칭, 회장학번, 지도교수교번, 소속학부번호)
+VALUES (%s, %s, %s, %s);
 """
 
 # 학생의 소속 동아리 변경
@@ -105,13 +105,13 @@ WHERE 동아리번호 = %s;
 check_professor = """
 SELECT 교번 
 FROM 교수 
-WHERE 교번 = %s OR 이메일 = %s;
+WHERE 이메일 = %s;
 """
 
 # 교수 추가
 insert_professor = """
-INSERT INTO 교수 (교번, 이름, 이메일, 임용일, 소속학부번호)
-VALUES (%s, %s, %s, %s, %s);
+INSERT INTO 교수 (이름, 이메일, 임용일, 소속학부번호)
+VALUES (%s, %s, %s, %s);
 """
 
 # 교수 연구분야 추가
