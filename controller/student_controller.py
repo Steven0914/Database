@@ -1,4 +1,5 @@
 import query.student_query as query
+from service.student_service import get_info
 
 
 def student_menu(cursor, connection):
@@ -12,8 +13,10 @@ def student_menu(cursor, connection):
         print("로그인 실패! 학번 또는 비밀번호가 잘못되었습니다.\n")
         return
 
-    student_name = result[0]
-    print(f"\n환영합니다, {student_name}님!")
+    학생이름 = result[0]
+    학번 = result[1]
+
+    print(f"\n환영합니다, {학생이름}님!")
 
     while True:
         print("\n===== 학생 메뉴 =====")
@@ -31,7 +34,7 @@ def student_menu(cursor, connection):
             choice = input("학생 메뉴에서 무엇을 하시겠습니까?: ")
 
             if choice == '0':
-                print("본인 정보 조회")
+                get_info(cursor, 학번)
             elif choice == '1':
                 print("동아리 리스트 조회")
             elif choice == '2':

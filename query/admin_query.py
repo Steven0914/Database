@@ -87,34 +87,40 @@ GROUP BY d.동아리번호, d.명칭, s1.이름, p.이름
 ORDER BY d.명칭;
 """
 
+# 학생이 어떤 동아리에 속해있는지 여부 확인
 check_student_in_club = """
 SELECT 학번 
 FROM 학생
 WHERE 학번 = %s AND 소속동아리번호 = %s;
 """
 
+# 회장 변경
 update_president = """
 UPDATE 동아리
 SET 회장학번 = %s
 WHERE 동아리번호 = %s;
 """
 
+# 교수 존재 여부 확인
 check_professor = """
 SELECT 교번 
 FROM 교수 
 WHERE 교번 = %s OR 이메일 = %s;
 """
 
+# 교수 추가
 insert_professor = """
 INSERT INTO 교수 (교번, 이름, 이메일, 임용일, 소속학부번호)
 VALUES (%s, %s, %s, %s, %s);
 """
 
+# 교수 연구분야 추가
 insert_research_area = """
 INSERT INTO 교수연구분야 (교번, 연구분야)
 VALUES (%s, %s);
 """
 
+# 학생 리스트 조회
 get_student_list = """
 SELECT s.학번, s.이름, h.학부명, d.명칭 AS 소속동아리명, s.가입일
 FROM 학생 s
@@ -123,6 +129,7 @@ LEFT JOIN 동아리 d ON s.소속동아리번호 = d.동아리번호
 ORDER BY s.학번;
 """
 
+# 교수 리스트 조회
 get_professor_list = """
 SELECT p.교번, p.이름, h.학부명, p.이메일, 
        p.임용일, GROUP_CONCAT(r.연구분야 SEPARATOR ', ') AS 연구분야
