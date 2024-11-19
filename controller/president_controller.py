@@ -1,4 +1,6 @@
 import query.president_query as query
+from service.president_service import update_club_name
+
 
 def president_menu(cursor, connection):
     try:
@@ -17,9 +19,12 @@ def president_menu(cursor, connection):
         print(f"\n환영합니다, {president_name}님! 현재 운영 중인 동아리는 '{club_name}'입니다.")
 
         while True:
+            cursor.execute(query.president_login, (user_id, user_name))
+            result = cursor.fetchone()
+            club_name = result[0]
             print("\n===== 동아리 회장 메뉴 =====")
             print(f"운영 중인 동아리: {club_name}")
-            print("1. 동아리 정보 변경")
+            print("1. 동아리 이름 변경")
             print("2. 동아리 활동 생성")
             print("3. 학생 동아리 가입 승인 및 거절")
             print("4. 운영 동아리의 활동 조회")
@@ -32,7 +37,7 @@ def president_menu(cursor, connection):
             choice = input("회장 메뉴에서 무엇을 하시겠습니까?: ")
 
             if choice == '1':
-                print("동아리 정보 변경")
+                update_club_name(cursor, connection, club_name)
             elif choice == '2':
                 print("동아리 활동 생성")
             elif choice == '3':
