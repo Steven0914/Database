@@ -1,5 +1,5 @@
 import query.president_query as query
-from service.president_service import update_club_name, create_activity, manage_apply
+from service.president_service import update_club_name, create_activity, manage_apply, get_activity_list
 
 
 def president_menu(cursor, connection):
@@ -32,6 +32,7 @@ def president_menu(cursor, connection):
             print("6. 동아리 활동 조회")
             print("7. 동아리원 강퇴")
             print("8. 활동 정보 변경")
+            print("9. 활동장소 변경")
             print("99. 이전 메뉴로 돌아가기")
 
             choice = input("회장 메뉴에서 무엇을 하시겠습니까?: ")
@@ -43,7 +44,7 @@ def president_menu(cursor, connection):
             elif choice == '3':
                 manage_apply(cursor, connection, club_name)
             elif choice == '4':
-                print("운영 동아리의 활동 조회")
+                get_activity_list(cursor, club_name)
             elif choice == '5':
                 print("운영 동아리 인원 조회")
             elif choice == '6':
@@ -52,6 +53,9 @@ def president_menu(cursor, connection):
                 print("동아리원 강퇴")
             elif choice == '8':
                 print("활동 정보 변경")
+            elif choice == '9':
+                print("활동장소 변경")
+
             elif choice == '99':
                 print("이전 메뉴로 돌아갑니다.\n")
                 break

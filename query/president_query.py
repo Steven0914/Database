@@ -60,3 +60,23 @@ delete_applicant = """
 DELETE FROM 가입대기
 WHERE 동아리번호 = %s AND 학번 = %s;
 """
+
+# 동아리 활동 정보 리스트 조회
+get_activity_info_list ="""
+SELECT  a.활동번호, a.활동명, a.날짜, a.활동시간,
+        GROUP_CONCAT(DISTINCT ac.내용 SEPARATOR '\n ') AS 활동내용,
+        j.주소, j.장소유형
+FROM 활동 a
+LEFT JOIN 활동내용 ac ON a.활동번호 = ac.활동번호
+LEFT JOIN 활동장소 j ON a.활동번호 = j.활동번호
+WHERE a.주관동아리번호 = %s
+GROUP BY a.활동번호
+ORDER BY a.날짜 ASC;
+"""
+
+# 참여자 조회
+get_participants = """
+SELECT s.이름 
+FROM 활동참여 ap, 학생 s
+WHERE ap.활동번호 = %s AND ap.학번 = s.학번;
+"""
