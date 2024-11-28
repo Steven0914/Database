@@ -41,7 +41,7 @@ WHERE 명칭 = %s;
 
 
 # 소속된 동아리의 참여 가능한 활동 리스트 조회
-get_available_activities_by_club = """
+get_available_activities = """
 SELECT a.활동번호, a.활동명, a.날짜, a.활동시간, COUNT(ap.학번) AS 참여인원
 FROM 활동 a
 LEFT JOIN 활동참여 ap ON a.활동번호 = ap.활동번호
@@ -69,5 +69,19 @@ WHERE 활동번호 = %s AND 학번 = %s;
 # 활동 참여 등록
 add_activity_participation = """
 INSERT INTO 활동참여 (활동번호, 학번)
+VALUES (%s, %s);
+"""
+
+
+# 참여 중인 활동 조회
+get_participated_activities = """
+SELECT a.활동번호, a.활동명, a.날짜, a.활동시간
+FROM 활동참여 ap, 활동 a
+WHERE ap.학번 = %s AND ap.활동번호 = a.활동번호;
+"""
+
+# 활동 내용 추가
+add_activity_content = """
+INSERT INTO 활동내용 (활동번호, 내용)
 VALUES (%s, %s);
 """

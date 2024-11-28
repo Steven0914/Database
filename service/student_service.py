@@ -76,7 +76,7 @@ def participate_activity(cursor, connection, student_id):
             return
         소속동아리번호 = club_result[0]
 
-        cursor.execute(query.get_available_activities_by_club, (소속동아리번호,))
+        cursor.execute(query.get_available_activities, (소속동아리번호,))
         activities = cursor.fetchall()
 
         if not activities:
@@ -93,7 +93,6 @@ def participate_activity(cursor, connection, student_id):
             print(f"{활동번호:<5} {활동명:<10} {날짜:<10}    {활동시간:<2} {참여인원:<2}")
         print("=" * 50)
 
-        # 활동 선택
         활동번호 = input("참여할 활동의 활동번호를 입력하세요: ").strip()
         cursor.execute(query.check_activity_participation, (활동번호, student_id))
         already_participated = cursor.fetchone()
@@ -102,7 +101,6 @@ def participate_activity(cursor, connection, student_id):
             print("이미 해당 활동에 참여 중입니다.")
             return
 
-        # 참여 등록
         cursor.execute(query.add_activity_participation, (활동번호, student_id))
         connection.commit()
         print(f"활동번호 {활동번호} 활동에 성공적으로 참여하였습니다.")
@@ -110,3 +108,41 @@ def participate_activity(cursor, connection, student_id):
     except Exception as e:
         connection.rollback()
         print(f"동아리 활동 참여 중 오류가 발생했습니다: {e}")
+
+
+def add_activity_content(cursor, connection, student_id):
+    try:
+        cursor.execute(query.get_participated_activities, (student_id,))
+        activities = cursor.fetchall()
+
+        if not activities:
+            print("참여 중인 활동이 없습니다.")
+            return
+
+        print("======== 참여 중인 활동 리스트 ========")
+        print(f"{'활동번호':<10} {'활동명':<15} {'날짜':<10} {'활동시간':<5}")
+        print("=" * 50)
+        for 활동번호, 활동명, 날짜, 활동시간 in activities:
+            날짜 = 날짜.strftime("%Y-%m-%d")
+            print(f"{활동번호:<10} {활동명:<15} {날짜:<10} {활동시간:<5}")
+        print("=" * 50)
+
+        활동번호 = input("내용을 추가할 활동의 활동번호를 입력하세요: ").strip()
+        selected_activity = next((a for a in activities if str(a[0]) == 활동번호), None)
+
+        if not selected_activity:
+            print("잘못된 활동번호를 입력하였습니다.")
+            return
+
+        내용 = input("추가할 내용을 입력하세요: ").strip()
+        if not 내용:
+            print("내용이 비어있습니다. 다시 시도하세요.")
+            return
+
+        cursor.execute(query.add_activity_content, (활동번호, 내용))
+        connection.commit()
+        print(f"활동번호 {활동번호}의 내용이 성공적으로 추가되었습니다.")
+
+    except Exception as e:
+        connection.rollback()
+        print(f"활동 내용 추가 중 오류가 발생했습니다: {e}")
