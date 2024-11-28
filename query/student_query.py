@@ -114,3 +114,18 @@ SELECT 연락처, 비밀번호
 FROM 학생
 WHERE 학번 = %s;
 """
+
+# 학생의 소속 동아리 조회
+check_club_exist = """
+SELECT c.명칭
+FROM 학생 s
+JOIN 동아리 c ON s.소속동아리번호 = c.동아리번호
+WHERE s.학번 = %s;
+"""
+
+# 학생의 동아리 탈퇴
+leave_club = """
+UPDATE 학생
+SET 소속동아리번호 = NULL, 가입일 = NULL
+WHERE 학번 = %s;
+"""

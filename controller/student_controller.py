@@ -1,6 +1,6 @@
 import query.student_query as query
 from service.student_service import get_info, get_club_list, apply_club, participate_activity, add_activity_content, \
-    get_activity_list, update_student_info
+    get_activity_list, update_student_info, leave_club
 
 
 def student_menu(cursor, connection):
@@ -49,7 +49,7 @@ def student_menu(cursor, connection):
             elif choice == '6':
                 update_student_info(cursor, connection, 학번)
             elif choice == '7':
-                print("동아리 탈퇴(동아리 소속시에만 가능)")
+                leave_club(cursor, connection, 학번)
             elif choice == '99':
                 print("이전 메뉴로 돌아갑니다.\n")
                 break

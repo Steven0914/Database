@@ -212,3 +212,29 @@ def update_student_info(cursor, connection, student_id):
     except Exception as e:
         connection.rollback()
         print(f"정보 수정 중 오류가 발생했습니다: {e}")
+
+
+def leave_club(cursor, connection, student_id):
+    try:
+        cursor.execute(query.check_club_exist, (student_id,))
+        result = cursor.fetchone()
+
+        if not result:
+            print("현재 소속된 동아리가 없습니다.")
+            return
+
+        club_name = result[0]
+        print(f"현재 소속된 동아리: {club_name}")
+
+        confirm = input(f"정말로 '{club_name}' 동아리를 탈퇴하시겠습니까? (Y/N): ").strip().upper()
+        if confirm != "Y":
+            print("동아리 탈퇴를 취소하였습니다.")
+            return
+
+        cursor.execute(query.leave_club, (student_id,))
+        connection.commit()
+        print(f"'{club_name}' 동아리에서 성공적으로 탈퇴하였습니다.")
+
+    except Exception as e:
+        connection.rollback()
+        print(f"동아리 탈퇴 중 오류가 발생했습니다: {e}")
