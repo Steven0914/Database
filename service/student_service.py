@@ -66,3 +66,47 @@ def apply_club(cursor, connection, student_id):
             print(f"\n동아리 가입 신청 중 오류가 발생했습니다: {e}")
 
 
+def participate_activity(cursor, connection, student_id):
+    try:
+        cursor.execute(query.get_student_club, (student_id,))
+        club_result = cursor.fetchone()
+
+        if not club_result or not club_result[0]:
+            print("소속된 동아리가 없습니다. 활동에 참여하려면 동아리에 가입하세요.")
+            return
+        소속동아리번호 = club_result[0]
+
+        cursor.execute(query.get_available_activities_by_club, (소속동아리번호,))
+        activities = cursor.fetchall()
+
+        if not activities:
+            print("소속된 동아리의 참여 가능한 활동이 없습니다.")
+            return
+
+        print("동아리 활동 참여 안내: 참여 가능한 활동은 오늘 이후의 활동 중 참여인원이 20명 미만인 활동입니다.\n")
+
+        print("======== 참여 가능한 동아리 활동 리스트 ========")
+        print(f"{'활동번호':<5} {'활동명':<10} {'날짜':<10} {'시간':<2} {'참여인원':<2}")
+        print("=" * 50)
+        for 활동번호, 활동명, 날짜, 활동시간, 참여인원 in activities:
+            날짜 = 날짜.strftime("%Y-%m-%d")
+            print(f"{활동번호:<5} {활동명:<10} {날짜:<10}    {활동시간:<2} {참여인원:<2}")
+        print("=" * 50)
+
+        # 활동 선택
+        활동번호 = input("참여할 활동의 활동번호를 입력하세요: ").strip()
+        cursor.execute(query.check_activity_participation, (활동번호, student_id))
+        already_participated = cursor.fetchone()
+
+        if already_participated:
+            print("이미 해당 활동에 참여 중입니다.")
+            return
+
+        # 참여 등록
+        cursor.execute(query.add_activity_participation, (활동번호, student_id))
+        connection.commit()
+        print(f"활동번호 {활동번호} 활동에 성공적으로 참여하였습니다.")
+
+    except Exception as e:
+        connection.rollback()
+        print(f"동아리 활동 참여 중 오류가 발생했습니다: {e}")

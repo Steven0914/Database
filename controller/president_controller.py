@@ -31,8 +31,6 @@ def president_menu(cursor, connection):
             print("4. 운영 동아리의 활동 조회")
             print("5. 운영 동아리 인원 조회")
             print("6. 동아리원 강퇴")
-            print("7. 활동 정보 변경")
-            print("8. 활동장소 변경")
             print("99. 이전 메뉴로 돌아가기")
 
             choice = input("회장 메뉴에서 무엇을 하시겠습니까?: ")
@@ -49,10 +47,6 @@ def president_menu(cursor, connection):
                 get_club_members(cursor, club_name)
             elif choice == '6':
                 remove_club_member(cursor, connection, club_name)
-            elif choice == '7':
-                print("활동 정보 변경")
-            elif choice == '8':
-                print("활동장소 변경")
 
             elif choice == '99':
                 print("이전 메뉴로 돌아갑니다.\n")

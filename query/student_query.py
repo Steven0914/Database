@@ -38,3 +38,36 @@ SELECT 동아리번호
 FROM 동아리 
 WHERE 명칭 = %s;
 """
+
+
+# 소속된 동아리의 참여 가능한 활동 리스트 조회
+get_available_activities_by_club = """
+SELECT a.활동번호, a.활동명, a.날짜, a.활동시간, COUNT(ap.학번) AS 참여인원
+FROM 활동 a
+LEFT JOIN 활동참여 ap ON a.활동번호 = ap.활동번호
+WHERE a.날짜 > CURDATE()
+  AND a.주관동아리번호 = %s
+GROUP BY a.활동번호
+HAVING 참여인원 < 20
+ORDER BY a.날짜 ASC;
+"""
+
+# 학생의 소속 동아리 확인
+get_student_club = """
+SELECT 소속동아리번호
+FROM 학생
+WHERE 학번 = %s;
+"""
+
+# 활동 참여 여부 확인
+check_activity_participation = """
+SELECT 학번
+FROM 활동참여
+WHERE 활동번호 = %s AND 학번 = %s;
+"""
+
+# 활동 참여 등록
+add_activity_participation = """
+INSERT INTO 활동참여 (활동번호, 학번)
+VALUES (%s, %s);
+"""
