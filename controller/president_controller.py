@@ -1,5 +1,6 @@
 import query.president_query as query
-from service.president_service import update_club_name, create_activity, manage_apply, get_activity_list
+from service.president_service import update_club_name, create_activity, manage_apply, get_activity_list, \
+    get_club_members
 
 
 def president_menu(cursor, connection):
@@ -46,7 +47,7 @@ def president_menu(cursor, connection):
             elif choice == '4':
                 get_activity_list(cursor, club_name)
             elif choice == '5':
-                print("운영 동아리 인원 조회")
+                get_club_members(cursor, club_name)
             elif choice == '6':
                 print("동아리 활동 조회")
             elif choice == '7':

@@ -190,3 +190,27 @@ def get_activity_list(cursor, club_name):
 
     except Exception as e:
         print(f"활동 조회 중 오류가 발생했습니다: {e}")
+
+
+def get_club_members(cursor, club_name):
+    try:
+        # 동아리 이름으로 인원을 조회
+        cursor.execute(query.get_club_members, (club_name,))
+        members = cursor.fetchall()
+
+        if not members:
+            print(f"동아리 '{club_name}'에 소속된 인원이 없습니다.")
+            return
+
+        # 조회 결과 출력
+        print(f"\n===== '{club_name}' 동아리의 소속 인원 =====")
+        print(f"{'학번':<10} {'이름':<5} {'연락처':<15} {'생일':<12} {'소속학부':<10} {'가입일':<10}")
+        print("=" * 80)
+        for 학번, 이름, 연락처, 생일, 학부명, 가입일 in members:
+            생일 = 생일.strftime("%Y-%m-%d")
+            가입일 = 가입일.strftime("%Y-%m-%d") if 가입일 else "정보 없음"
+            print(f"{학번:<10} {이름:<5} {연락처:<15} {생일:<12} {학부명:<10} {가입일:<10}")
+        print("=" * 80)
+
+    except Exception as e:
+        print(f"동아리 인원 조회 중 오류가 발생했습니다: {e}")
