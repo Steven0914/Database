@@ -174,3 +174,41 @@ def get_activity_list(cursor, 학번):
 
     except Exception as 오류:
         print(f"참여 활동 조회 중 오류가 발생했습니다: {오류}")
+
+
+def update_student_info(cursor, connection, student_id):
+    try:
+        cursor.execute(query.get_student_info, (student_id,))
+        current_info = cursor.fetchone()
+
+        if not current_info:
+            print("학생 정보를 찾을 수 없습니다.")
+            return
+
+        current_contact, current_password = current_info
+        print("\n===== 개인정보 정보 수정 =====")
+        new_contact = input("새로운 연락처를 입력하세요 (엔터: 기존 유지): ").strip()
+        new_password = input("새로운 비밀번호를 입력하세요 (엔터: 기존 유지): ").strip()
+
+        updated_contact = new_contact if new_contact else current_contact
+        updated_password = new_password if new_password else current_password
+
+        cursor.execute(query.update_student_info, (updated_contact, updated_password, student_id))
+        connection.commit()
+
+        if (updated_contact != current_contact) or (updated_password != current_password):
+            print("\n정보가 성공적으로 수정되었습니다.")
+
+        if updated_contact != current_contact:
+            print(f"변경된 연락처: {updated_contact}")
+        else:
+            print("연락처는 변경되지 않았습니다.")
+
+        if updated_password != current_password:
+            print(f"변경된 비밀번호: {updated_password}")
+        else:
+            print("비밀번호는 변경되지 않았습니다.")
+
+    except Exception as e:
+        connection.rollback()
+        print(f"정보 수정 중 오류가 발생했습니다: {e}")

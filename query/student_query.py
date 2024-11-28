@@ -99,3 +99,18 @@ WHERE ap.학번 = %s
 GROUP BY a.활동번호, a.활동명, a.날짜, a.활동시간, j.주소, j.장소유형
 ORDER BY a.날짜 ASC;
 """
+
+
+# 학생 정보 수정
+update_student_info = """
+UPDATE 학생
+SET 연락처 = %s, 비밀번호 = %s
+WHERE 학번 = %s;
+"""
+
+# 학생 비밀정보 조회
+get_student_info = """
+SELECT 연락처, 비밀번호
+FROM 학생
+WHERE 학번 = %s;
+"""
