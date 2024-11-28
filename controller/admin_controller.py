@@ -5,18 +5,17 @@ from service.admin_service import add_student, add_club, change_supervisor, get_
 
 
 def admin_menu(cursor, connection):
-    # password = input("비밀번호를 입력하세요: ")
-    #
-    # # admin 로그인 로직, 후에 주석을 해제
-    # login_successful = False
-    # if password == ADMIN_PASSWORD:
-    #     login_successful = True
-    #
-    # if not login_successful:
-    #     print("로그인 실패! 이전 메뉴로 돌아갑니다.\n")
-    #     return
-    #
-    # print("\n로그인 성공! 관리자 메뉴로 이동합니다.")
+    password = input("비밀번호를 입력하세요: ")
+
+    login_successful = False
+    if password == ADMIN_PASSWORD:
+        login_successful = True
+
+    if not login_successful:
+        print("로그인 실패! 이전 메뉴로 돌아갑니다.\n")
+        return
+
+    print("\n로그인 성공! 관리자 메뉴로 이동합니다.")
 
     while True:
         print("\n===== 관리자 메뉴 =====")
