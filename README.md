@@ -2,29 +2,25 @@
 
 ## 1. 프로젝트 소개
 - 소프트웨어학부의 동아리를 관리하는 시스템입니다.
-- 관리자, 동아리 회장, 일반 학생으로 구분되어 각각의 권한을 가집니다.
+- 관리자, 동아리 회장, 일반 학생으로 접속하여 각각의 역할에 맞는 기능을 수행할 수 있습니다.
 
 
 ## 2. 프로젝트 구조
 ```
 - Database Project
   - controller                      # Controller 파일
-    - __init__.py
     - admin_controller.py           # 관리자 메뉴
     - menu.py                       # 초기 메뉴
     - president_controller.py       # 동아리 회장 메뉴
     - student_controller.py         # 일반 학생 메뉴
   - database                        # Database 관련 파일
-    - __init__.py
     - connect_db.py                 # Database 연결 파일
     - init_db.py                    # Database 초기화 파일
   - query                           # SQL Query문
-    - __init__.py
     - admin_query.py
     - president_query.py
     - student_query.py
   - service                         # Controller에서 호출하는 함수들
-    - __init__.py
     - admin_service.py
     - president_service.py
     - student_service.py
@@ -35,17 +31,48 @@
 ```
 
 ## 3. 프로젝트 기능
+
+해당 시스템에는 각각의 역할마다 다음과 같은 기능을 수행할 수 있습니다.
+
 ### 1. 관리자
+1. 데이터베이스 초기화
+2. 학생 추가
+3. 동아리 생성
+4. 동아리 지도 교수 변경
+5. 전체 동아리 통계 보기
+6. 동아리 회장 변경
+7. 교수 추가
+8. 학생 리스트 조회
+9. 교수 리스트 조회
 
 
 ### 2. 동아리 회장
+1. 동아리 이름 변경
+2. 동아리 활동 생성
+3. 학생 동아리 가입 승인 및 거절
+4. 운영 동아리의 활동 조회
+5. 운영 동아리 인원 조회
+6. 동아리 활동 조회
+7. 동아리원 강퇴
+8. 활동 정보 변경
+9. 활동장소 변경
+
 
 
 ### 3. 일반 학생
+1. 본인 정보 조회
+2. 동아리 리스트 조회
+3. 동아리 가입 신청
+4. 동아리 활동 참여
+5. 활동 내용 추가
+6. 본인이 참여한 활동 조회
+7. 개인 정보 변경
+8. 동아리 탈퇴(동아리 소속시에만 가능)
 
 
 
 ## 4. 프로젝트 실행
+0. config.py에 설정된 db정보에 해당하는 mysql 서버가 실행중이어야 합니다.
 1. main.py 파일을 실행합니다.
 ```bash
 $ python main.py
