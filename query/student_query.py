@@ -85,3 +85,17 @@ add_activity_content = """
 INSERT INTO 활동내용 (활동번호, 내용)
 VALUES (%s, %s);
 """
+
+# 활동 참여자 정보 조회
+get_activity_list = """
+SELECT  a.활동번호, a.활동명, a.날짜, a.활동시간,
+        GROUP_CONCAT(DISTINCT ac.내용 SEPARATOR '\n') AS 활동내용,
+        j.주소, j.장소유형, COUNT(DISTINCT ap.학번) AS 참여학생수
+FROM 활동참여 ap
+JOIN 활동 a ON ap.활동번호 = a.활동번호
+LEFT JOIN 활동내용 ac ON a.활동번호 = ac.활동번호
+LEFT JOIN 활동장소 j ON a.활동번호 = j.활동번호
+WHERE ap.학번 = %s
+GROUP BY a.활동번호, a.활동명, a.날짜, a.활동시간, j.주소, j.장소유형
+ORDER BY a.날짜 ASC;
+"""

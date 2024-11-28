@@ -146,3 +146,31 @@ def add_activity_content(cursor, connection, student_id):
     except Exception as e:
         connection.rollback()
         print(f"활동 내용 추가 중 오류가 발생했습니다: {e}")
+
+
+def get_activity_list(cursor, 학번):
+    try:
+        cursor.execute(query.get_activity_list, (학번,))
+        활동 = cursor.fetchall()
+
+        if not 활동:
+            print("참여한 활동이 없습니다.")
+            return
+
+        print("\n======== 내가 참여한 활동 목록 ========")
+        for 활동번호, 활동명, 날짜, 시간, 내용, 주소, 장소유형, 참여학생수 in 활동:
+            print(f"활동번호: {활동번호}")
+            print(f"활동명: {활동명}")
+            print(f"날짜: {날짜.strftime('%Y-%m-%d')}")
+            print(f"시간: {시간}시간")
+            내용 = 내용 or "활동 내용 없음"
+            print(f"활동 내용:\n{내용}")
+            주소 = 주소 or "장소 정보 없음"
+            장소유형 = 장소유형 or "장소 유형 없음"
+            print(f"장소: {주소} ({장소유형})")
+            print(f"참여 학생 수: {참여학생수}명")
+            print("-" * 50)
+        print("=" * 50)
+
+    except Exception as 오류:
+        print(f"참여 활동 조회 중 오류가 발생했습니다: {오류}")
