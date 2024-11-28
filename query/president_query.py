@@ -81,6 +81,7 @@ FROM 활동참여 ap, 학생 s
 WHERE ap.활동번호 = %s AND ap.학번 = s.학번;
 """
 
+# 동아리원 조회
 get_club_members = """
 SELECT s.학번, s.이름, s.연락처, s.생일, h.학부명, s.가입일
 FROM 학생 s, 학부 h
@@ -90,4 +91,18 @@ WHERE s.소속학부번호 = h.학부번호 AND
     FROM 동아리
     WHERE 명칭 = %s
 );
+"""
+
+# 동아리 소속 여부 확인
+check_club_membership = """
+SELECT s.이름
+FROM 학생 s, 동아리 d
+WHERE s.소속동아리번호 = d.동아리번호 AND d.명칭 = %s AND s.학번 = %s;
+"""
+
+# 동아리원 강퇴
+remove_club_member = """
+UPDATE 학생
+SET 소속동아리번호 = NULL, 가입일 = NULL
+WHERE 학번 = %s;
 """

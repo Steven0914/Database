@@ -214,3 +214,30 @@ def get_club_members(cursor, club_name):
 
     except Exception as e:
         print(f"동아리 인원 조회 중 오류가 발생했습니다: {e}")
+
+
+def remove_club_member(cursor, connection, club_name):
+    try:
+        학번 = input("강퇴할 동아리원의 학번을 입력하세요: ").strip()
+
+        cursor.execute(query.check_club_membership, (club_name, 학번))
+        member = cursor.fetchone()
+
+        if not member:
+            print(f"학번 {학번}은 동아리 '{club_name}'에 소속되어 있지 않습니다.")
+            return
+
+        이름 = member[0]
+        확인 = input(f"\"{이름}\" 학생을 정말로 강퇴하시겠습니까? (y/n): ").strip().lower()
+        if 확인 != 'y':
+            print("강퇴 작업이 취소되었습니다.")
+            return
+
+        cursor.execute(query.remove_club_member, (학번,))
+        connection.commit()
+
+        print(f"\"{이름}\" 학생이 동아리 '{club_name}'에서 강퇴되었습니다.")
+
+    except Exception as e:
+        connection.rollback()
+        print(f"동아리원 강퇴 중 오류가 발생했습니다: {e}")
