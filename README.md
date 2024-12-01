@@ -70,6 +70,10 @@
 
 ## 4. 프로젝트 실행
 0. config.py에 설정된 db정보에 해당하는 mysql 서버가 실행중이어야 합니다.
+또한 파이썬과 mysql을 연결하기 위해 pymysql 라이브러리가 설치되어 있어야 합니다.
+```bash
+pip install mysql-connector-python 
+```
 1. main.py 파일을 실행합니다.
 ```bash
 $ python main.py
